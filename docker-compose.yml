@@ -1,6 +1,6 @@
 version: "3.5"
 
-servies:
+services:
     web:
         build: .
         volumes:
