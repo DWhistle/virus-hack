@@ -1,0 +1,9 @@
+version: "3.5"
+
+servies:
+    web:
+        build: .
+        volumes:
+            - ./services/web/:/usr/src/app/
+          ports:
+            - 5000:5000
