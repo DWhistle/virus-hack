@@ -2,9 +2,13 @@ from flask import Flask
 
 from private.config import configure_resources
 from private.service import api
-
+from private.api.student import student_api
+from private.api.teacher import teacher_api
 
 app = Flask(__name__)
+app.register_blueprint(student_api)
+app.register_blueprint(teacher_api)
+
 
 @app.route("/")
 def hw():
