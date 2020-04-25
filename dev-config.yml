@@ -1,0 +1,27 @@
+postgres:
+  host: ""
+  user: ""
+  password: ""
+  database: ""
+
+flask:
+
+
+logging:
+  version: 1
+  disable_existing_loggers: True
+  formatters:
+    shortened:
+      format: "%(message)s"
+    std:
+      format: "%(levelname)s %(name)s: %(message)s"
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: INFO
+      formatter: std
+      stream: ext://sys.stdout
+  loggers:
+    default:
+      level: INFO
+      handlers: [console]
