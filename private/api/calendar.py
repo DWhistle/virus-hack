@@ -23,8 +23,7 @@ def get_by_id():
             filters.append(Event.class_id == class_id)
         if teacher_id:
             filters.append(Event.id == teacher_id)
-        q = ss.query(Event, User, Lesson).filter(*filters)
-        rs = q.all()
+        rs = ss.query(Event, User, Lesson).filter(*filters).all()
     for event, user, lesson in rs:
         events.append(
             {"id": event.id,
