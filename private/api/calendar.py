@@ -15,14 +15,15 @@ def get_by_id():
     events = []
     with init_session() as ss:
         q = ss.query(Event)
-        q.join(User, User.id == Event.teacher_id)
-        q.join(Lesson, Lesson.id == Event.lesson_id)
+        q.join(User).filter(User.id == Event.teacher_id)
+        q.join(Lesson).filter(Lesson.id == Event.lesson_id)
         if event_id:
-            q.filter(Event.id == event_id)
+            q.filter(Event.id == id)
         if class_id:
             q.filter(Event.class_id == class_id)
         if teacher_id:
             q.filter(Event.id == teacher_id)
+       
         rs = q.all()
     for event, user, lesson in rs:
         events.append(
