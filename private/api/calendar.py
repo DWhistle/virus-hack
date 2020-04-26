@@ -1,23 +1,35 @@
 
 from flask import Blueprint, request
-from private.db.models import Event, Profile, init_session
+from private.db.models import Event, Profile, init_session, User
 from datetime import datetime
 from datetime import timedelta
+from private.db.models.education import Lesson
 
 calendar_api = Blueprint("calendar", __name__, url_prefix="/calendar")
 
 @calendar_api.route("/", methods = ["GET"])
-def get_by_participators():
+def get_by_participants():
     teacher_id = int(request.args.get('teacher_id') or 0)
     class_id = int(request.args.get('class_id') or 0)
-
+    events = []
     with init_session() as ss:
-        q = ss.query(Event, Profile)
+        q = ss.query(Event, User, Lesson)
         if teacher_id:
             q.filter(Profile.user_id == teacher_id)
         if class_id:
             q.filter(Event.class_id == class_id)
-        events = q.all()
+        q.filter(Lesson.id == Event.lesson_id)
+        rs = q.all()
+    for event, user, lesson in rs:
+        events.append(
+            {"id": event.id,
+             "teacher_name": user.name,
+             "lesson": lesson.name,
+             "description": event.description,
+             "begin_time": event.begin_time,
+             "end_time": event.end_time,
+             "homework": "12345"})
+
     return {"lessons": events}
 
     return {"lessons": [{
