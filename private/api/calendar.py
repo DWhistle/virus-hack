@@ -11,18 +11,20 @@ calendar_api = Blueprint("calendar", __name__, url_prefix="/calendar")
 def get_by_id():
     teacher_id = int(request.args.get('teacher_id') or 0)
     class_id = int(request.args.get('class_id') or 0)
-    id = int(request.args.get('id') or 0)
+    event_id = int(request.args.get('id') or 0)
     events = []
     with init_session() as ss:
-        q = ss.query(Event, User, Lesson)
-        if id:
-            q.filter(Event.id == id)
+        q = ss.query(Event)
+        q.join(User)
+        q.filter(User.id == Event.teacher_id)
+        q.join(Event)
+        q.filter(Lesson.id == Event.lesson_id)
+        if event_id:
+            q.filter(Event.id == event_id)
         if class_id:
             q.filter(Event.class_id == class_id)
         if teacher_id:
             q.filter(Event.id == teacher_id)
-        q.filter(User.id == Event.teacher_id)
-        q.filter(Lesson.id == Event.lesson_id)
         rs = q.all()
     for event, user, lesson in rs:
         events.append(
