@@ -11,11 +11,12 @@ db_connection = create_engine(f"{db['driver']}://{db['user']}:{db['password']}@l
 
 
 Session = sessionmaker()
-session = Session(bind=db_connection)
 
 
 @contextmanager
 def init_session():
+    session = Session()
+    session.expire_on_commit = False
     try:
         yield session
         session.commit()
