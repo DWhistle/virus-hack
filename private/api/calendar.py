@@ -1,6 +1,6 @@
 
 from flask import Blueprint, request
-from private.db.models import Event, Profile, Session
+from private.db.models import Event, Profile, init_session
 from datetime import datetime
 from datetime import timedelta
 
@@ -11,7 +11,7 @@ def get_by_participators():
     teacher_id = int(request.args.get('teacher_id') or 0)
     class_id = int(request.args.get('class_id') or 0)
 
-    with Session() as ss:
+    with init_session() as ss:
         q = ss.query(Event, Profile)
         if teacher_id:
             q.filter(Profile.user_id == teacher_id)
