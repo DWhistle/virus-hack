@@ -1,8 +1,9 @@
-from sqlalchemy.sql.schema import Column, ForeignKey
+from sqlalchemy.sql.schema import Column, ForeignKey, MetaData
 from sqlalchemy.types import Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+meta = MetaData()
+Base = declarative_base(metadata=meta)
 
 class Class(Base):
     __tablename__ = 'class'

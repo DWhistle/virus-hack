@@ -2,9 +2,9 @@ from sqlalchemy import MetaData
 from flask.cli import FlaskGroup
 from main import app
 from private.db.models import db_connection
+from private.db.models.identity import meta
 
 
-meta = MetaData()
 meta.bind = db_connection
 client = FlaskGroup(app)
 @client.command("drop_db")
