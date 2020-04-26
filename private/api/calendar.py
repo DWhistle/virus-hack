@@ -14,18 +14,17 @@ def get_by_id():
     event_id = int(request.args.get('id') or 0)
     events = []
     with init_session() as ss:
+        filters = []
         q = ss.query(Event, User, Lesson)
-        q.join(User)
-        q.filter(User.id == Event.teacher_id)
-        q.join(Lesson)
-        q.filter(Lesson.id == Event.lesson_id)
+        filters.append(User.id == Event.teacher_id)
+        filters.append(Lesson.id == Event.lesson_id)
         if event_id:
-            q.filter(Event.id == event_id)
+            filters.append(Event.id == event_id)
         if class_id:
-            q.filter(Event.class_id == class_id)
+            filters.append(Event.class_id == class_id)
         if teacher_id:
-            q.filter(Event.id == teacher_id)
-       
+            filters.append(Event.id == teacher_id)
+        q.filter(*filters)
         rs = q.all()
     for event, user, lesson in rs:
         events.append(
