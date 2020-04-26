@@ -8,16 +8,20 @@ from private.db.models.education import Lesson
 calendar_api = Blueprint("calendar", __name__, url_prefix="/calendar")
 
 @calendar_api.route("/", methods = ["GET"])
-def get_by_participants():
+def get_by_id():
     teacher_id = int(request.args.get('teacher_id') or 0)
     class_id = int(request.args.get('class_id') or 0)
+    id = int(request.args.get('id') or 0)
     events = []
     with init_session() as ss:
         q = ss.query(Event, User, Lesson)
-        if teacher_id:
-            q.filter(Profile.user_id == teacher_id)
+        if id:
+            q.filter(Event.id == id)
         if class_id:
             q.filter(Event.class_id == class_id)
+        if teacher_id:
+            q.filter(Event.id == teacher_id)
+        q.filter(User.id == Event.teacher_id)
         q.filter(Lesson.id == Event.lesson_id)
         rs = q.all()
     for event, user, lesson in rs:
@@ -32,6 +36,7 @@ def get_by_participants():
 
     return {"lessons": events}
 
+def get_by_id():
     return {"lessons": [{
             "teacher_name": "Петрова Петя Петровна",
             "lesson": "Биология",
