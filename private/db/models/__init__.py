@@ -15,7 +15,7 @@ Session = sessionmaker()
 
 @contextmanager
 def init_session():
-    session = Session()
+    session = Session(bind = db_connection)
     session.expire_on_commit = False
     try:
         yield session
