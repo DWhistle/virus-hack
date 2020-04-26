@@ -1,9 +1,27 @@
+from sqlalchemy.sql.schema import Column, ForeignKey
+from sqlalchemy.types import Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
+Base = declarative_base()
 
+class Class(Base):
+    __tablename__ = 'class'
+    id = Column(Integer, primary_key=True)
+    grade = Column(Integer)
+    specialization = Column(String(40))
+    roles = Column(Integer)
 
-class User:
-    
-    def get_info(self):
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(127))
+    username = Column(String(32))
+    password = Column(String(255))
+    class_id = Column(Integer, ForeignKey('class.id'))
+
+    @staticmethod
+    def get_info():
         pass
 
 
