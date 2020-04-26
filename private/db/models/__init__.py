@@ -7,4 +7,3 @@ from sqlalchemy.ext.declarative import declarative_base
 from private.config import db
 
 db_connection = create_engine(f"{db['driver']}://{db['user']}:{db['password']}@localhost/{db['database']}")
-Class.__table__.create(db_connection)
