@@ -11,6 +11,10 @@ client = FlaskGroup(app)
 def drop_all():
     meta.drop_all()
 
+@client.command("create_db")
+def create_all():
+    meta.create_all()
+
 
 
 if __name__ == "__main__":
