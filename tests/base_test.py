@@ -17,6 +17,7 @@ class TestEdu(unittest.TestCase):
         end_time = datetime.now() + timedelta(days=3) + timedelta(minutes=40))
         with init_session() as ss:
             ss.add(def_class)
+        with init_session() as ss:
             ss.add(def_user)
         with init_session() as ss:
             ss.add(def_profile)
