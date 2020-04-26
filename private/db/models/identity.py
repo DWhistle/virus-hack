@@ -36,6 +36,9 @@ class Profile(Base):
     birthday = Column(Date())
 
 class Session:
-
+    __tablename__ = 'session'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    key = Column(String(127))
     def check_identity(self):
         pass

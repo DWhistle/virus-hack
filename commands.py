@@ -17,6 +17,5 @@ def create_all():
     meta.create_all()
 
 
-
 if __name__ == "__main__":
     client()
