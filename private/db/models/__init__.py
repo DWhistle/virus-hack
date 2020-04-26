@@ -23,4 +23,5 @@ def init_session():
         session.rollback()
         raise
     finally:
+        session.expunge_all()
         session.close()
