@@ -1,6 +1,6 @@
 
 from flask import Blueprint, request
-from private.db.models import Student, Event, Profile, Session
+from private.db.models import Event, Profile, Session
 from datetime import datetime
 from datetime import timedelta
 
