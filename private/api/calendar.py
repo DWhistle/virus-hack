@@ -15,7 +15,6 @@ def get_by_id():
     events = []
     with init_session() as ss:
         filters = []
-        q = ss.query(Event, User, Lesson)
         filters.append(User.id == Event.teacher_id)
         filters.append(Lesson.id == Event.lesson_id)
         if event_id:
@@ -24,7 +23,7 @@ def get_by_id():
             filters.append(Event.class_id == class_id)
         if teacher_id:
             filters.append(Event.id == teacher_id)
-        q.filter(*filters)
+        q = ss.query(Event, User, Lesson).filter(*filters)
         rs = q.all()
     for event, user, lesson in rs:
         events.append(
