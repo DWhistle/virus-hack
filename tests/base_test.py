@@ -18,7 +18,9 @@ class TestEdu(unittest.TestCase):
         with init_session() as ss:
             ss.add(def_class)
             ss.add(def_user)
+        with init_session() as ss:
             ss.add(def_profile)
             ss.add(def_lesson)
+        with init_session() as ss:
             ss.add(def_event)
 
