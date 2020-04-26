@@ -6,19 +6,19 @@ from datetime import timedelta
 
 calendar_api = Blueprint("calendar", __name__, url_prefix="/calendar")
 
-@calendar_api.route("/<event>", methods = ["GET"])
-def get_by_participators(event):
-    # teacher_id = int(request.args.get('teacher_id') or 0)
-    # class_id = int(request.args.get('class_id') or 0)
+@calendar_api.route("/", methods = ["GET"])
+def get_by_participators():
+    teacher_id = int(request.args.get('teacher_id') or 0)
+    class_id = int(request.args.get('class_id') or 0)
 
-    # with Session() as ss:
-    #     q = ss.query(Event, Profile)
-    #     if teacher_id:
-    #         q.filter(Profile.user_id == teacher_id)
-    #     if class_id:
-    #         q.filter(Event.class_id == class_id)
-    #     events = q.all()
-    # return {"lessons": events}
+    with Session() as ss:
+        q = ss.query(Event, Profile)
+        if teacher_id:
+            q.filter(Profile.user_id == teacher_id)
+        if class_id:
+            q.filter(Event.class_id == class_id)
+        events = q.all()
+    return {"lessons": events}
 
     return {"lessons": [{
             "teacher_name": "Петрова Петя Петровна",
