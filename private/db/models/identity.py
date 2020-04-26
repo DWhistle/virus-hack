@@ -26,13 +26,14 @@ class User(Base):
 
 class Profile(Base):
     __tablename__ = 'profile'
+    id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     age = Column(Integer)
     gender = Column(Integer)
     phone = Column(String(11))
     email = Column(String(256))
     birthday = Column(Date())
-    
+
 class Session:
 
     def check_identity(self):
