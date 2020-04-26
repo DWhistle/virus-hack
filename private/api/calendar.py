@@ -15,7 +15,9 @@ def get_by_id():
     events = []
     with init_session() as ss:
         q = ss.query(Event, User, Lesson)
+        q.join(User)
         q.filter(User.id == Event.teacher_id)
+        q.join(Lesson)
         q.filter(Lesson.id == Event.lesson_id)
         if event_id:
             q.filter(Event.id == event_id)
