@@ -14,11 +14,11 @@ def get_by_id():
     event_id = int(request.args.get('id') or 0)
     events = []
     with init_session() as ss:
-        q = ss.query(Event)
-        q.join(User).filter(User.id == Event.teacher_id)
-        q.join(Lesson).filter(Lesson.id == Event.lesson_id)
+        q = ss.query(Event, User, Lesson)
+        q.filter(User.id == Event.teacher_id)
+        q.filter(Lesson.id == Event.lesson_id)
         if event_id:
-            q.filter(Event.id == id)
+            q.filter(Event.id == event_id)
         if class_id:
             q.filter(Event.class_id == class_id)
         if teacher_id:
