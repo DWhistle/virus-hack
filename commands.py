@@ -3,6 +3,7 @@ from flask.cli import FlaskGroup
 from main import app
 from private.db.models import db_connection
 from private.db.models.identity import meta
+from private.db.models.education import *
 
 
 meta.bind = db_connection
