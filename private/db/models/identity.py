@@ -1,7 +1,6 @@
 from sqlalchemy.sql.schema import Column, ForeignKey, MetaData
 from sqlalchemy.types import Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from private.db.models import init_session
 
 meta = MetaData()
 Base = declarative_base(metadata=meta)
@@ -53,6 +52,7 @@ class Session(Base):
 class DbMethods:
     @staticmethod
     def user_info_by_id(user_id: int):
+        from private.db.models import init_session
         info = []
         with init_session() as ss:
             rs = ss.query(User, Profile)\

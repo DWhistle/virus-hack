@@ -3,7 +3,7 @@ from private.db.models.identity import DbMethods
 
 user_api = Blueprint("user", __name__, url_prefix="/user")
 
-@student_api.route("/<id>", methods = ["GET"])
+@user_api.route("/<id>", methods = ["GET"])
 def get_by_id(id):
     id = int(id or 0) 
     user, profile = DbMethods.user_info_by_id(id)
