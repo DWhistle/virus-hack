@@ -35,21 +35,3 @@ def get_by_id():
              "homework": "12345"})
 
     return {"lessons": events}
-
-def get_by_id():
-    return {"lessons": [{
-            "teacher_name": "Петрова Петя Петровна",
-            "lesson": "Биология",
-            "description": "урок с самостоялкой",
-            "begin_time": datetime.now() + timedelta(days=1),
-            "homework": "стр. 1, N 3,2,1,4",
-            "end_time": datetime.now()+ timedelta(days=1) + timedelta(minutes=30)
-        },
-        {
-            "teacher_name": "Петрова Ольга Викторовна",
-            "lesson": "Русский",
-            "description": "тупа урок",
-            "begin_time": datetime.now() + timedelta(days=2),
-            "homework": "стр. 14, N 3,2,1,4",
-            "end_time": datetime.now()+ timedelta(days=2) + timedelta(minutes=30)
-        }]}

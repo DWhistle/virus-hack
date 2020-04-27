@@ -3,12 +3,12 @@ from flask import Flask
 from private.config import configure_resources
 configure_resources()
 from private.service import api
-from private.api.student import student_api
+from private.api.user import user_api
 from private.api.teacher import teacher_api
 from private.api.calendar import calendar_api
 
 app = Flask(__name__)
-app.register_blueprint(student_api)
+app.register_blueprint(user_api)
 app.register_blueprint(teacher_api)
 app.register_blueprint(calendar_api)
 
