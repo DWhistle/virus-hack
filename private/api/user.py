@@ -1,5 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from private.db.models.identity import DbMethods
+from . import RegistrationForm
+
 
 user_api = Blueprint("user", __name__, url_prefix="/user")
 
@@ -14,3 +16,8 @@ def get_by_id(id):
             "phone": profile.phone,
             "email": profile.email,
             "birthday": profile.birthday}
+
+@user_api.route("/register", methods = ["POST"])
+def register_user():
+    form = RegistrationForm(request.form)
+    
