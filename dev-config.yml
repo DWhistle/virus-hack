@@ -5,6 +5,7 @@ postgres:
   database: edu
 
 flask:
+  secret: xede134da2eqDQWD@12ewe
 
 
 logging:

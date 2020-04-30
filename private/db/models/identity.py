@@ -59,6 +59,10 @@ class DbMethods:
                 .filter(User.id == Profile.user_id)\
                     .filter(User.id == user_id).first()
         return rs
+    
+    @staticmethod
+    def check_rights(user_id: int, role: str):
+        from private.db.models import init_session
 
     @staticmethod
     def role_by_id(role_id: int):

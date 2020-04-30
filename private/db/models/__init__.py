@@ -3,10 +3,11 @@ from .education import Event, Lesson
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from private.config import db
+from private.config import Configurator
 from sqlalchemy.orm.session import sessionmaker
 from contextlib import contextmanager
 
+db = Configurator.db
 db_connection = create_engine(f"{db['driver']}://{db['user']}:{db['password']}@localhost/{db['database']}")
 
 
@@ -26,3 +27,6 @@ def init_session():
     finally:
         session.expunge_all()
         session.close()
+
+class DbValueNotFoundError(Exception):
+    pass
