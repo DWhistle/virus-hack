@@ -20,3 +20,21 @@ class Lesson(Base):
     __tablename__ = 'lesson'
     id = Column(Integer, primary_key=True)
     name = Column(String(50))
+
+class DbMethods:
+    @staticmethod
+    def lesson_info_by_id(lesson_id: int):
+        from private.db.models import init_session
+        info = []
+        with init_session() as ss:
+            rs = ss.query(Lesson) \
+                   .filter(Lesson.id == lesson_id).first()
+        return rs
+
+    @staticmethod
+    def lesson_add(name: str):
+        from private.db.models import init_session
+        info = []
+        with init_session() as ss:
+            ss.add_all([Lesson(name=name)])
+            ss.commit()

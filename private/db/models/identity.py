@@ -59,3 +59,21 @@ class DbMethods:
                 .filter(User.id == Profile.user_id)\
                     .filter(User.id == user_id).first()
         return rs
+
+    @staticmethod
+    def role_by_id(role_id: int):
+        from private.db.models import init_session
+        info = []
+        with init_session() as ss:
+            rs = ss.query(Role) \
+                    .filter(Role.id == role_id).first()
+        return rs
+
+    @staticmethod
+    def role_by_id(class_id: int):
+        from private.db.models import init_session
+        info = []
+        with init_session() as ss:
+            rs = ss.query(Class) \
+                    .filter(Class.id == class_id).first()
+        return rs
