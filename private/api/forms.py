@@ -3,7 +3,7 @@ from wtforms import validators
 
 class RegistrationForm(Form):
     name = StringField('name', [validators.Length(min=4, max=100)])
-    email = StringField('email', [validators.Length(min=6, max=35), validators.Email()])
+    email = StringField('email', [validators.Length(min=6, max=35)])
     password = PasswordField('password', [
         validators.DataRequired(),
     ])
