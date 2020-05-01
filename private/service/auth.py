@@ -20,7 +20,7 @@ def require_role(func, role = ''):
     return wrapped
 
 def encode_password(password: str):
-    return hashlib.sha256(password.encode('utf-8')).digest()
+    return str(hashlib.sha256(password.encode('utf-8')).digest())
 
 
 class UserValidation:
