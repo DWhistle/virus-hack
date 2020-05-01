@@ -5,6 +5,7 @@ from private.db.models.identity import DbMethods
 import jwt
 from private.db.models import DbValueNotFoundError
 import hashlib
+from private.api import ValidationError
 
 def require_role(func, role = ''):
     @wraps(func)
@@ -16,7 +17,7 @@ def require_role(func, role = ''):
             user_id, class_id = auth.verify_token(token)
             validation.check_role(class_id, role)
         except (DbValueNotFoundError, jwt.ExpiredSignatureError, jwt.InvalidTokenError) as e:
-            raise e
+            raise ValidationError((str(e), 401))
         return func(user_id, *args, **kwargs)
     return wrapped
 
