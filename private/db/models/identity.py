@@ -66,6 +66,16 @@ class DbMethods:
                 .filter(User.id == Profile.user_id)\
                     .filter(User.id == user_id).first()
         return rs
+
+    @staticmethod
+    def user_info_all():
+        from private.db.models import init_session
+        info = []
+        with init_session() as ss:
+            rs = ss.query(User, Profile)\
+                .filter(User.id == Profile.user_id)\
+                    .all()
+        return rs
     
     @staticmethod
     def check_rights(user_id: int, role: str):

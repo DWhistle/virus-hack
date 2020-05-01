@@ -19,6 +19,17 @@ def get_by_id(id):
             "email": profile.email,
             "birthday": profile.birthday}
 
+@user_api.route("/", methods = ["GET"])
+def get_all():
+    rs = DbMethods.user_info_all()
+    return map(lambda user, profile: {"id": user.id,
+            "name": user.name,
+            "age": profile.age,
+            "gender": profile.gender,
+            "phone": profile.phone,
+            "email": profile.email,
+            "birthday": profile.birthday}, rs)
+
 @user_api.route("/register", methods = ["POST"])
 def register_user():
     form = RegistrationForm(request.form)

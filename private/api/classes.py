@@ -11,3 +11,7 @@ def get_class_members():
 @classes_api.route("/add", methods = ["POST"])
 def create_class():
     pass
+
+@classes_api.route("/add", methods = ["POST"])
+def get_classes():
+    pass
