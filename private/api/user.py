@@ -4,6 +4,7 @@ from . import RegistrationForm, ValidationError, ApiException
 import hashlib
 from private.service.auth import Registration, TokenAuth, UserValidation
 from private.api.forms import LoginForm
+import random
 
 user_api = Blueprint("user", __name__, url_prefix="/user")
 
@@ -22,13 +23,17 @@ def get_by_id(id):
 @user_api.route("/", methods = ["GET"])
 def get_all():
     rs = DbMethods.user_info_all()
-    return {"users": list(map(lambda user, profile: {"id": user.id,
+    users = []
+    for user, profile in rs:
+        users.append({"id": user.id,
             "name": user.name,
             "age": profile.age,
             "gender": profile.gender,
             "phone": profile.phone,
             "email": profile.email,
-            "birthday": profile.birthday}, rs))}
+            "birthday": profile.birthday,
+            "is_connected": True if random.randint(0,1) else False})
+    return {"users": users * 5}
 
 @user_api.route("/register", methods = ["POST"])
 def register_user():
