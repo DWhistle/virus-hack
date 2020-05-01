@@ -33,7 +33,7 @@ def get_all():
             "email": profile.email,
             "birthday": profile.birthday,
             "is_connected": True if random.randint(0,1) else False})
-    return {"users": users * 5}
+    return {"users": users * 2}
 
 @user_api.route("/register", methods = ["POST"])
 def register_user():
