@@ -30,6 +30,15 @@ class DbMethods:
             rs = ss.query(Lesson) \
                    .filter(Lesson.id == lesson_id).first()
         return rs
+    
+    @staticmethod
+    def lessons_get_all(lesson_id: int):
+        from private.db.models import init_session
+        info = []
+        with init_session() as ss:
+            rs = ss.query(Lesson) \
+                   .filter(Lesson.id == lesson_id).all()
+        return rs
 
     @staticmethod
     def lesson_add(name: str):

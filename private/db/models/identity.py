@@ -12,6 +12,13 @@ class Class(Base):
     specialization = Column(String(40))
     roles = Column(Integer, ForeignKey("role.id"))
 
+class AssignedClasses(Base):
+    __tablename__ = 'assigned_classes'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    class_id = Column(Integer, ForeignKey('class.id'))
+
+
 class Role(Base):
     __tablename__ = 'role'
     id = Column(Integer, primary_key=True)

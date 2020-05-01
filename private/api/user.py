@@ -54,7 +54,6 @@ def login():
         "token": token
     }
 
-
 @user_api.errorhandler(ApiException)
 def handle_invalid_usage(error):
     return error.json
