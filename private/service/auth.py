@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import request, current_app as app
 from datetime import datetime, timedelta
-from private.db.models.identity import DbMethods
+from private.db.models.identity import DbMethods, User
 import jwt
 from private.db.models import DbValueNotFoundError
 import hashlib
@@ -37,6 +37,9 @@ class UserValidation:
 
 class Registration:
     def register_user(self, name:str, email:str, password:str, age:int, phone:str, gender:int, class_id:int, username: str):
+        user = DbMethods.check_user_identity(username, User.password)
+        if user:
+            raise Exception("Имя пользователя занято")
         user_id = DbMethods.register_user(name, email, 
                             encode_password(password),
                             age, phone,
