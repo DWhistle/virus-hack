@@ -11,9 +11,10 @@ def require_role(func, role = ''):
     def wrapped(*args, **kwargs):
         token = request.headers.get('Authorization', None)        
         auth = TokenAuth()
+        validation = UserValidation()
         try:
             user_id, class_id = auth.verify_token(auth.create_auth_token(1,2))
-            auth.check_role(class_id, role)
+            validation.check_role(class_id, role)
         except DbValueNotFoundError as e:
             pass
         return func(user_id, *args, **kwargs)
@@ -52,7 +53,7 @@ class TokenAuth:
         return jwt.encode(
             payload,
             app.config.get('SECRET'),
-            algorithm='HS256')
+            algorithm='HS256').decode("utf-8")
 
     def verify_token(self, token):
         try:
