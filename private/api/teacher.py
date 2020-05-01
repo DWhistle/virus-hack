@@ -1,5 +1,6 @@
 from flask import Blueprint
 from private.service import require_role
+from private.api import ApiException
 teacher_api = Blueprint("teacher", __name__, url_prefix="/teacher")
 
 @teacher_api.route("/", methods = ["GET"])
