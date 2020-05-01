@@ -8,7 +8,8 @@ from sqlalchemy.orm.session import sessionmaker
 from contextlib import contextmanager
 
 db = Configurator.db
-db_connection = create_engine(f"{db['driver']}://{db['user']}:{db['password']}@localhost/{db['database']}")
+db_connection = create_engine(f"{db['driver']}://{db['user']}:{db['password']}@localhost/{db['database']}", 
+isolation_level='READ UNCOMMITTED')
 
 
 Session = sessionmaker()

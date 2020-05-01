@@ -74,10 +74,22 @@ class DbMethods:
         return rs
 
     @staticmethod
-    def role_by_id(class_id: int):
+    def class_by_id(class_id: int):
         from private.db.models import init_session
         info = []
         with init_session() as ss:
             rs = ss.query(Class) \
                     .filter(Class.id == class_id).first()
         return rs
+
+    @staticmethod
+    def register_user(name:str, email:str, password:str, age:int, phone:str, gender:int, class_id:int):
+        from private.db.models import init_session
+        with init_session() as ss:
+            user = User(name=name, username="111", password=password, class_id=class_id)
+            ss.add(user)
+            ss.flush()
+            profile = Profile(user_id=user.id, age=age, gender=gender, phone=phone, email=email)
+            ss.add(profile)
+        return user.id
+            
