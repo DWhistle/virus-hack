@@ -15,7 +15,7 @@ def require_role(func, role = ''):
         try:
             user_id, class_id = auth.verify_token(token)
             validation.check_role(class_id, role)
-        except DbValueNotFoundError as e:
+        except (DbValueNotFoundError, jwt.ExpiredSignatureError, jwt.InvalidTokenError) as e:
             pass
         return func(user_id, *args, **kwargs)
     return wrapped
@@ -56,11 +56,5 @@ class TokenAuth:
             algorithm='HS256').decode("utf-8")
 
     def verify_token(self, token):
-        try:
             payload = jwt.decode(token, app.config.get('SECRET'))
             return payload['sub'], payload['class']
-        except jwt.ExpiredSignatureError:
-            return 'Signature expired. Please log in again.'
-        except jwt.InvalidTokenError:
-            return 'Invalid token. Please log in again.'
-            
