@@ -10,8 +10,15 @@ def get_by_id(id):
         "id": id,
         'dashboards': [
             {
-                'name': 'rose',
-                'data': [10, 20, 40]
+                'name': 'progress',
+                'data': [
+                    [3.4, 4.1, 4.5],
+                    [3.3, 3.9, 4.1]
+                ],
+            },
+            {
+                'name': 'avg',
+                'data': [4.4, 3.2, 3.5]
             }
         ]        
     }
