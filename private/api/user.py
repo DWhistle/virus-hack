@@ -2,6 +2,8 @@ from flask import Blueprint, request
 from private.db.models.identity import DbMethods
 from . import RegistrationForm, ValidationError, ApiException
 import hashlib
+from private.service.auth import Registration, TokenAuth, UserValidation
+from private.api.forms import LoginForm
 
 user_api = Blueprint("user", __name__, url_prefix="/user")
 
@@ -23,16 +25,35 @@ def register_user():
     if not form.validate():
         raise ValidationError("Ошибка валидации!", status_code=400)
     try:
-        user_id = DbMethods.register_user(form.name.data, form.email.data, 
-                            hashlib.sha256(form.password.data.encode('utf-8')).digest(),
+        registration = Registration()
+        user_id = registration.register_user(form.name.data, form.email.data, 
+                            form.password.data,
                             form.age.data, form.phone.data,
-                            form.gender.data, form.class_id.data)
+                            form.gender.data, form.class_id.data, form.username.data)
         return {
             "user_id": user_id,
             "status": True
         }
     except Exception as e:
         raise ApiException(repr(e), 500)
+
+@user_api.route("/login", methods = ["POST"])
+def login():
+    form = LoginForm(request.form)
+    if not form.validate():
+        raise ValidationError("Ошибка валидации!", status_code=400)
+    validation = UserValidation()
+    try:
+        user_id, class_id = validation.check_identity(form.username.data, form.password.data)
+    except Exception as e:
+        raise ApiException(repr(e), 500)
+    auth = TokenAuth()
+    token = auth.create_auth_token(user_id, class_id)
+    return {
+        "status": True,
+        "token": token
+    }
+
 
 @user_api.errorhandler(ApiException)
 def handle_invalid_usage(error):

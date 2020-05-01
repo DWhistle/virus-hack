@@ -65,6 +65,14 @@ class DbMethods:
         from private.db.models import init_session
 
     @staticmethod
+    def check_user_identity(username: str, password: str):
+        from private.db.models import init_session
+        with init_session() as ss:
+            user = ss.query(User) \
+                .filter(User.username == username, User.password == password).first()
+        return user
+
+    @staticmethod
     def role_by_id(role_id: int):
         from private.db.models import init_session
         info = []
@@ -83,10 +91,10 @@ class DbMethods:
         return rs
 
     @staticmethod
-    def register_user(name:str, email:str, password:str, age:int, phone:str, gender:int, class_id:int):
+    def register_user(name:str, email:str, password:str, age:int, phone:str, gender:int, class_id:int, username: str):
         from private.db.models import init_session
         with init_session() as ss:
-            user = User(name=name, username="111", password=password, class_id=class_id)
+            user = User(name=name, username=username, password=password, class_id=class_id)
             ss.add(user)
             ss.flush()
             profile = Profile(user_id=user.id, age=age, gender=gender, phone=phone, email=email)
