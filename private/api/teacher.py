@@ -6,3 +6,9 @@ teacher_api = Blueprint("teacher", __name__, url_prefix="/teacher")
 @require_role
 def get_teachers(user_id: int):
     return {"teachers": 123}
+
+
+
+@teacher_api.errorhandler(ApiException)
+def handle_invalid_usage(error):
+    return error.json
