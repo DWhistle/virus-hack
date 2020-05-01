@@ -16,7 +16,7 @@ def require_role(func, role = ''):
             user_id, class_id = auth.verify_token(token)
             validation.check_role(class_id, role)
         except (DbValueNotFoundError, jwt.ExpiredSignatureError, jwt.InvalidTokenError) as e:
-            pass
+            raise e
         return func(user_id, *args, **kwargs)
     return wrapped
 
