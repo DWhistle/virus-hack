@@ -13,7 +13,7 @@ def require_role(func, role = ''):
         auth = TokenAuth()
         validation = UserValidation()
         try:
-            user_id, class_id = auth.verify_token(auth.create_auth_token(1,2))
+            user_id, class_id = auth.verify_token(token)
             validation.check_role(class_id, role)
         except DbValueNotFoundError as e:
             pass
