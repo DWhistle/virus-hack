@@ -95,11 +95,14 @@ class DbMethods:
     def get_full_assignment_info(assignment_id: int):
         from private.db.models import init_session
         with init_session() as ss:
-            rs = ss.query(Assignment, Task, Pin) \
+            assignment, task = ss.query(Assignment, Task) \
             .filter(Assignment.task_id == Task.id) \
-            .filter(Pin.assignment_id == Assignment.id) \
-            .filter(Assignment.id == assignment_id).all()
-        return rs
+            .filter(Assignment.id == assignment_id).first()
+            
+            pins = ss.query(Pin) \
+            .filter(Pin.assignment_id == assignment_id) \
+            .all()
+        return assignment, task, pins
 
     @staticmethod
     def lessons_get_all(lesson_id: int):
