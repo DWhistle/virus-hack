@@ -26,7 +26,7 @@ class Task(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(200))
     lesson_id = Column(ForeignKey("lesson.id"))
-    assignment = Column(String(8000))
+    assignment = Column(String(1000))
     assignment_type = Column(String(40))
     
 

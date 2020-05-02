@@ -24,7 +24,7 @@ class LoginForm(Form):
 class TaskForm(Form):
     task_name = StringField('Name', validators=[validators.DataRequired()])
     lesson_id = IntegerField('LessonId', validators=[validators.DataRequired()])
-    assignment = IntegerField('Assignment', validators=[validators.DataRequired()])
+    assignment = StringField('Assignment', validators=[validators.DataRequired()])
     assignment_type = StringField('AssignmentType', validators=[validators.DataRequired()])
 
 class AssignmentForm(Form):
