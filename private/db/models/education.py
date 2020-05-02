@@ -84,10 +84,10 @@ class DbMethods:
         from private.db.models import init_session
         with init_session() as ss:
             for pin in pins:
-                pin = Pin(assignment_id=pin.assignment_id,
-                        coord_x=pin.coord_x,
-                        coord_y=pin.coord_y,
-                        message=pin.message)
+                pin = Pin(assignment_id=pin['assignment_id'],
+                        coord_x=pin['coord_x'],
+                        coord_y=pin['coord_y'],
+                        message=pin['message'])
                 ss.add(pin)
         return True
     
