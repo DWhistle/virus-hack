@@ -72,7 +72,7 @@ class DbMethods:
         from private.db.models import init_session
         with init_session() as ss:
             assignment = Assignment(teacher_id=teacher_id,
-                                    assignee_class_id=assignee_class_id,
+                                    assignee_user_id=assignee_class_id,
                                     task_id=assingment_id,
                                     mark=0)
             ss.add(assignment)
