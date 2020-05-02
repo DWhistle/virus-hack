@@ -44,7 +44,7 @@ def add_assignment(identity):
                         af.assignee_user_id.data,
                         af.task_id.data)
     return {
-        "task_id": assignment_id
+        "assignment_id": assignment_id
     }
 
 @assessment_api.route("/pins", methods=['PUT'])
@@ -68,6 +68,6 @@ def get_assignment_with_pins(identity, assignment_id):
             "assignment": task.assignment,
             "assignment_type": task.assignment_type,
             "teacher_id": assignment.teacher_id,
-            "assignee_class_id": assignment.assignee_class_id,
+            "assignee_user_id": assignment.assignee_user_id,
             "task_id": assignment.task_id,
             "mark": assignment.mark}
