@@ -73,7 +73,7 @@ class DbMethods:
         with init_session() as ss:
             assignment = Assignment(teacher_id=teacher_id,
                                     assignee_class_id=assignee_class_id,
-                                    assingment_id=assingment_id,
+                                    task_id=assingment_id,
                                     mark=0)
             ss.add(assignment)
         return assignment.id
