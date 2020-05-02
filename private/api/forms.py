@@ -28,7 +28,7 @@ class TaskForm(Form):
     assignment_type = StringField('AssignmentType', validators=[validators.DataRequired()])
 
 class AssignmentForm(Form):
-    teacher_id = IntegerField('TeacherId', validators=[validators.DataRequired()])
+    teacher_id = IntegerField('TeacherId'])
     assignee_class_id = IntegerField('AssigneeClassId', validators=[validators.DataRequired()])
     assingment_id = IntegerField('AssignmentId', validators=[validators.DataRequired()])
 

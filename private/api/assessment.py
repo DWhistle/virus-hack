@@ -25,7 +25,7 @@ def pins_by_id(id):
 
 @assessment_api.route("/task", methods=['PUT'])
 @require_role
-def add_task(user_id):
+def add_task(identity):
     tf = TaskForm(request.form)
     task_id = DbMethods.task_add(tf.task_name.data,
                         tf.lesson_id.data,
@@ -37,9 +37,9 @@ def add_task(user_id):
 
 @assessment_api.route("/assignment", methods=['PUT'])
 @require_role
-def add_assignment(user_id):
+def add_assignment(identity):
     af = AssignmentForm(request.form)
-    assignment_id = DbMethods.assignment_add(af.teacher_id.data,
+    assignment_id = DbMethods.assignment_add(identity.user_id,
                         af.assignee_class_id.data,
                         af.assingment_id.data)
     return {
@@ -48,7 +48,7 @@ def add_assignment(user_id):
 
 @assessment_api.route("/pins", methods=['PUT'])
 @require_role
-def add_pins(user_id):
+def add_pins(identity):
     pf = PinsForm(request.form)
     return {
         "success": DbMethods.pins_add(pf.pins)
@@ -56,7 +56,7 @@ def add_pins(user_id):
 
 @assessment_api.route("/assignment", methods=["GET"])
 @require_role
-def get_assignment_with_pins(user_id, assignment_id):
+def get_assignment_with_pins(identity, assignment_id):
     rs = DbMethods.get_full_assignment_info(assessment_api)
     print(rs)
     return {"pins": rs}
