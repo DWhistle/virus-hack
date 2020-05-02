@@ -34,7 +34,7 @@ class Assignment(Base):
     __tablename__ = 'assignment'
     id = Column(Integer, primary_key=True)
     teacher_id = Column(Integer, ForeignKey("user.id"))
-    assignee_class_id = Column(Integer, ForeignKey("class.id"))
+    assignee_user_id = Column(Integer, ForeignKey("user.id"))
     task_id  = Column(Integer, ForeignKey("task.id"))
     mark = Column(Integer)
 
