@@ -4,6 +4,7 @@ from private.service import require_role
 from private.api.forms import TaskForm, AssignmentForm, PinsForm
 from private.db.models.education import DbMethods
 import io
+import json
 
 assessment_api = Blueprint("assessment", __name__, url_prefix="/assessment")
 
@@ -49,9 +50,8 @@ def add_assignment(identity):
 @assessment_api.route("/pins", methods=['PUT'])
 @require_role
 def add_pins(identity):
-    pf = PinsForm(request.form)
     return {
-        "success": DbMethods.pins_add(pf.pins)
+        "success": DbMethods.pins_add(request.get_json())
     }
 
 @assessment_api.route("/assignment", methods=["GET"])
