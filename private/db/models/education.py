@@ -98,7 +98,7 @@ class DbMethods:
             rs = ss.query(Assignment, Task, Pin) \
             .filter(Assignment.task_id == Task.id) \
             .filter(Pin.assignment_id == Assignment.id) \
-            .filter(Assignment.id == assignment_id)
+            .filter(Assignment.id == assignment_id).first()
         return rs
 
     @staticmethod
