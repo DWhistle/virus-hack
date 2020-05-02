@@ -18,12 +18,16 @@ def require_role(func, role = ''):
             validation.check_role(class_id, role)
         except:
             raise ValidationError("Ошибка верификации пользователя", 401)
-        return func(user_id, *args, **kwargs)
+        return func(IdentityObject(user_id, class_id), *args, **kwargs)
     return wrapped
 
 def encode_password(password: str):
     return str(hashlib.sha256(password.encode('utf-8')).digest())
 
+class IdentityObject:
+    def __init__(self, user_id, class_id):
+        self.user_id = user_id
+        self.class_id = class_id
 
 class UserValidation:
     def check_role(self, user_id, role):

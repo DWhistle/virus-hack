@@ -1,5 +1,8 @@
 from flask import Blueprint, request
 from flask.helpers import send_file
+from private.service import require_role
+from private.api.forms import TaskForm, AssignmentForm, PinsForm
+from private.db.models.education import DbMethods
 import io
 
 assessment_api = Blueprint("assessment", __name__, url_prefix="/assessment")
@@ -19,3 +22,41 @@ def pins_by_id(id):
     return {"pins": 
     [(500,700, "вот тут поправить"),
     (550,800, "вот тут ещё")]}
+
+@assessment_api.route("/task", methods=['PUT'])
+@require_role
+def add_task(user_id):
+    tf = TaskForm(request.form)
+    task_id = DbMethods.task_add(tf.task_name.data,
+                        tf.lesson_id.data,
+                        tf.assignment.data,
+                        tf.assignment_type.data)
+    return {
+        "task_id": task_id
+    }
+
+@assessment_api.route("/assignment", methods=['PUT'])
+@require_role
+def add_assignment(user_id):
+    af = AssignmentForm(request.form)
+    assignment_id = DbMethods.assignment_add(af.teacher_id.data,
+                        af.assignee_class_id.data,
+                        af.assingment_id.data)
+    return {
+        "task_id": assignment_id
+    }
+
+@assessment_api.route("/pins", methods=['PUT'])
+@require_role
+def add_pins(user_id):
+    pf = PinsForm(request.form)
+    return {
+        "success": DbMethods.pins_add(pf.pins)
+    }
+
+@assessment_api.route("/assignment", methods=["GET"])
+@require_role
+def get_assignment_with_pins(user_id, assignment_id):
+    rs = DbMethods.get_full_assignment_info(assessment_api)
+    print(rs)
+    return {"pins": rs}

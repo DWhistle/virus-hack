@@ -21,6 +21,31 @@ class Lesson(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50))
 
+class Task(Base):
+    __tablename__ = 'task'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200))
+    lesson_id = Column(ForeignKey("lesson.id"))
+    assignment = Column(String(8000))
+    assignment_type = Column(String(40))
+    
+
+class Assignment(Base):
+    __tablename__ = 'assignment'
+    id = Column(Integer, primary_key=True)
+    teacher_id = Column(Integer, ForeignKey("user.id"))
+    assignee_class_id = Column(Integer, ForeignKey("class.id"))
+    task_id  = Column(Integer, ForeignKey("task.id"))
+    mark = Column(Integer)
+
+class Pin(Base):
+    __tablename__ = 'pin'
+    id = Column(Integer, primary_key=True)
+    assignment_id  = Column(Integer, ForeignKey("assignment.id"))
+    coord_x = Column(Integer)
+    coord_y = Column(Integer)
+    message = Column(String(500))
+
 class DbMethods:
     @staticmethod
     def lesson_info_by_id(lesson_id: int):
@@ -31,6 +56,51 @@ class DbMethods:
                    .filter(Lesson.id == lesson_id).first()
         return rs
     
+    @staticmethod
+    def task_add(task_name: str, lesson_id: int, assignment: str, assignment_type: str):
+        from private.db.models import init_session
+        with init_session() as ss:
+            task = Task(name=task_name, 
+            lesson_id=lesson_id, 
+            assignment=assignment, 
+            assignment_type=assignment_type)
+            ss.add(task)
+        return task.id
+    
+    @staticmethod
+    def assignment_add(teacher_id: int, assignee_class_id: int, assingment_id: int):
+        from private.db.models import init_session
+        with init_session() as ss:
+            assignment = Assignment(teacher_id=teacher_id,
+                                    assignee_class_id=assignee_class_id,
+                                    assingment_id=assingment_id,
+                                    mark=0)
+            ss.add(assignment)
+        return assignment.id
+
+
+    @staticmethod
+    def pins_add(pins: list):
+        from private.db.models import init_session
+        with init_session() as ss:
+            for pin in pins:
+                pin = Pin(assignment_id=pin.assignment_id,
+                        coord_x=pin.coord_x,
+                        coord_y=pin.coord_y,
+                        message=pin.message)
+                ss.add(pin)
+        return True
+    
+    @staticmethod
+    def get_full_assignment_info(assignment_id: int):
+        from private.db.models import init_session
+        with init_session() as ss:
+            rs = ss.query(Assignment, Task, Pin) \
+            .filter(Assignment.task_id == Task.id) \
+            .filter(Pin.assignment_id == Assignment.id) \
+            .filter(Assignment.id == assignment_id)
+        return rs
+
     @staticmethod
     def lessons_get_all(lesson_id: int):
         from private.db.models import init_session

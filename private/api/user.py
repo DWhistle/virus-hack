@@ -14,6 +14,7 @@ def get_by_id(id):
     user, profile = DbMethods.user_info_by_id(id)
     return {"id": user.id,
             "name": user.name,
+            "class_id": user.class_id,
             "age": profile.age,
             "gender": profile.gender,
             "phone": profile.phone,
