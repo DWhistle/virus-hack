@@ -30,7 +30,7 @@ class TaskForm(Form):
 class AssignmentForm(Form):
     teacher_id = IntegerField('TeacherId')
     assignee_class_id = IntegerField('AssigneeClassId', validators=[validators.DataRequired()])
-    assingment_id = IntegerField('AssignmentId', validators=[validators.DataRequired()])
+    task_id = IntegerField('TaskId', validators=[validators.DataRequired()])
 
 
 class PinForm(Form):
