@@ -134,7 +134,7 @@ class DbMethods:
             filters.append(Event.id == event_id)
             with init_session() as ss:
                 assignments = ss.query(Assignment, Task) \
-                    .filter(Assignment.event == event_id) \
+                    .filter(Assignment.event_id == event_id) \
                     .filter(Assignment.task_id == Task.id) \
                     .filter(Assignment.assignee_user_id == user_id).all()
         with init_session() as ss:
