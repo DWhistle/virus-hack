@@ -18,7 +18,8 @@ def get_by_id(id):
     as_attachment=True)
 
 @assessment_api.route("/image/upload", methods=["POST"])
-def upload_hw_image()
+def upload_hw_image():
+    pass
 
 @assessment_api.route("/pins/<id>", methods = ["GET"])
 def pins_by_id(id):
