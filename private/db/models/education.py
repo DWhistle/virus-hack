@@ -130,6 +130,7 @@ class DbMethods:
         filters = []
         filters.append(Event.class_id == class_id)
         filters.append(Lesson.id == Event.lesson_id)
+        filters.append(User.id == Event.teacher_id)
         if event_id != 0:
             filters.append(Event.id == event_id)
             with init_session() as ss:
@@ -138,6 +139,7 @@ class DbMethods:
                     .filter(Assignment.task_id == Task.id) \
                     .filter(Assignment.assignee_user_id == user_id).all()
         with init_session() as ss:
-            rs = ss.query(User, Event, Lesson) \
+            rs = ss.query(Event, Lesson, User) \
                 .filter(*filters).all()
+        print(rs, assignments)
         return rs, assignments
