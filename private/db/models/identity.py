@@ -1,6 +1,7 @@
 from sqlalchemy.sql.schema import Column, ForeignKey, MetaData
 from sqlalchemy.types import Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+from private.db.models import DbValueNotFoundError
 
 meta = MetaData()
 Base = declarative_base(metadata=meta)
@@ -78,8 +79,15 @@ class DbMethods:
         return rs
     
     @staticmethod
-    def check_rights(user_id: int, role: str):
+    def check_rights(class_id: int, role: str):
         from private.db.models import init_session
+        with init_session() as ss:
+            rs = ss.query(Class, Role) \
+                .filter(Class.id == class_id) \
+                    .filter(Class.roles == Role.id) \
+                        .filter(Role.name == role).first()
+            if not rs:
+                raise DbValueNotFoundError("Роли не существует!")
 
     @staticmethod
     def check_user_identity(username: str, password: str):

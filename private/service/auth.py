@@ -30,8 +30,9 @@ class IdentityObject:
         self.class_id = class_id
 
 class UserValidation:
-    def check_role(self, user_id, role):
-        DbMethods.check_rights(user_id, role)
+    def check_role(self, class_id, role):
+        if role is not '':
+            DbMethods.check_rights(class_id, role)
 
     def check_identity(self, username:str, password:str):
         user = DbMethods.check_user_identity(username, encode_password(password))
