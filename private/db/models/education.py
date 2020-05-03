@@ -36,6 +36,7 @@ class Assignment(Base):
     teacher_id = Column(Integer, ForeignKey("user.id"))
     assignee_user_id = Column(Integer, ForeignKey("user.id"))
     task_id  = Column(Integer, ForeignKey("task.id"))
+    event_id = Column(Integer, ForeignKey("event.id"))
     mark = Column(Integer)
 
 class Pin(Base):

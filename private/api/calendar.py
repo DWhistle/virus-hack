@@ -5,6 +5,7 @@ from datetime import datetime
 from datetime import timedelta
 from private.db.models.education import Lesson, DbMethods
 from private.api.forms import EventForm
+from private.api.assessment import get_assignment_with_pins
 
 calendar_api = Blueprint("calendar", __name__, url_prefix="/calendar")
 
@@ -32,7 +33,7 @@ def get_by_id():
              "lesson": lesson.name,
              "description": event.description,
              "begin_time": event.begin_time,
-             "end_time": event.end_time,
-             "homework": "12345"})
+             "end_time": event.end_time,\
+             "homework": get_assignment_with_pins(None, )})
 
     return {"lessons": events}

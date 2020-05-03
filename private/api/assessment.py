@@ -17,8 +17,8 @@ def get_by_id(id):
     mimetype='image/jpeg',
     as_attachment=True)
 
-@assessment_api.route("/image/upload", methods=["POST"])
-def upload_hw_image():
+@assessment_api.route("/task/upload-image", methods=["POST"])
+def upload_task_image():
     pass
 
 @assessment_api.route("/pins/<id>", methods = ["GET"])
@@ -60,7 +60,10 @@ def add_pins(identity):
 
 @assessment_api.route("/assignment/<assignment_id>", methods=["GET"])
 @require_role
-def get_assignment_with_pins(identity, assignment_id):
+def get_assigment(identity, assignment_id):
+    return get_assignment_with_pins(assignment_id)
+
+def get_assignment_with_pins(assignment_id):
     assignment, task, pins = DbMethods.get_full_assignment_info(assignment_id)
     pins_response = list(map(lambda p: 
     {"assignment_id": p.assignment_id,
