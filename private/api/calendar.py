@@ -5,7 +5,6 @@ from datetime import datetime
 from datetime import timedelta
 from private.db.models.education import Assignment, DbMethods, Lesson
 from private.api.forms import EventForm
-from private.api.assessment import get_assignment_with_pins
 
 calendar_api = Blueprint("calendar", __name__, url_prefix="/calendar")
 
@@ -19,15 +18,14 @@ def get_by_id():
         filters = []
         filters.append(User.id == Event.teacher_id)
         filters.append(Lesson.id == Event.lesson_id)
-        filters.append(Assignment.event_id == Event.id)
         if event_id:
             filters.append(Event.id == event_id)
         if class_id:
             filters.append(Event.class_id == class_id)
         if teacher_id:
             filters.append(Event.id == teacher_id)
-        rs = ss.query(Event, User, Lesson, Assignment).filter(*filters).all()
-    for event, user, lesson, assignment in rs:
+        rs = ss.query(Event, User, Lesson).filter(*filters).all()
+    for event, user, lesson in rs:
         events.append(
             {"id": event.id,
              "teacher_name": user.name,
@@ -35,8 +33,38 @@ def get_by_id():
              "description": event.description,
              "begin_time": event.begin_time,
              "end_time": event.end_time,
-             "homework": get_assignment_with_pins(assignment.id)
-             }
-        )
+             "homework": "Страница 1, з. 2"
+             })
 
+    return {"lessons": events}
+
+
+@calendar_api.route("/student/<event_id>", methods = ["GET"])
+def get_lesson_for_student(identity, event_id):
+    events = []
+    assignments = []
+    rs, tasks = DbMethods.lessons_for_student(identity.user_id, identity.class_id, event_id)
+    for user, event, lesson in rs:
+        events.append(
+            {"id": event.id,
+             "teacher_name": user.name,
+             "lesson": lesson.name,
+             "description": event.description,
+             "begin_time": event.begin_time,
+             "end_time": event.end_time,
+             "homework": "Страница 1, з. 2"
+             })
+    if len(events) == 1 and tasks is not None:
+        for assignment, task in tasks:
+            assignments.append(
+                {"lesson_id": task.lesson_id,
+                "assignment": task.assignment,
+                "assignment_type": task.assignment_type,
+                "teacher_id": assignment.teacher_id,
+                "assignee_user_id": assignment.assignee_user_id,
+                "task_id": assignment.task_id,
+                "mark": assignment.mark}
+                )
+        lesson['assignments'] = assignments
+        return {"lesson": lesson}
     return {"lessons": events}

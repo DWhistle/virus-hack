@@ -62,9 +62,6 @@ def add_pins(identity):
 @assessment_api.route("/assignment/<assignment_id>", methods=["GET"])
 @require_role
 def get_assigment(identity, assignment_id):
-    return get_assignment_with_pins(assignment_id)
-
-def get_assignment_with_pins(assignment_id):
     assignment, task, pins = DbMethods.get_full_assignment_info(assignment_id)
     pins_response = list(map(lambda p: 
     {"assignment_id": p.assignment_id,

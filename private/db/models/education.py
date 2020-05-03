@@ -2,6 +2,7 @@ from sqlalchemy.sql.schema import Column, ForeignKey
 from sqlalchemy.types import Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from .identity import Base
+from private.db.models.identity import User
 
 class Event(Base):
     __tablename__ = 'event'
@@ -122,3 +123,21 @@ class DbMethods:
         with init_session() as ss:
             ss.add_all([Lesson(name=name)])
             ss.commit()
+
+    @staticmethod
+    def lessons_for_student(user_id: int, class_id: int, event_id: int):
+        from private.db.models import init_session
+        filters = []
+        filters.append(Event.class_id == class_id)
+        filters.append(Lesson.id == Event.lesson_id)
+        if event_id != 0:
+            filters.append(Event.id == event_id)
+            with init_session() as ss:
+                assignments = ss.query(Assignment, Task) \
+                    .filter(Assignment.event == event_id) \
+                    .filter(Assignment.task_id == Task.id) \
+                    .filter(Assignment.assignee_user_id == user_id).all()
+        with init_session() as ss:
+            rs = ss.query(User, Event, Lesson) \
+                .filter(*filters).all()
+        return rs, assignments
