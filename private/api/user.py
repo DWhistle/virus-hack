@@ -20,7 +20,7 @@ def get_by_id(id):
             "phone": profile.phone,
             "email": profile.email,
             "birthday": profile.birthday,
-            "university": recommendation.university
+            "university": recommendation.university,
             "specialization": recommendation.specialization}
 
 @user_api.route("/my", methods = ["GET"])
@@ -37,7 +37,7 @@ def get_current_user_id(identity):
             "phone": profile.phone,
             "email": profile.email,
             "birthday": profile.birthday,
-            "university": recommendation.university
+            "university": recommendation.university,
             "specialization": recommendation.specialization}
 
 @user_api.route("/", methods = ["GET"])
