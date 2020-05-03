@@ -38,7 +38,7 @@ class User(Base):
     def get_info():
         pass
 
-def UniversityRecommendation(Base):
+class UniversityRecommendation(Base):
     __tablename__ = 'university_recommendation'
 
     id = Column(Integer, primary_key=True)
