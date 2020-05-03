@@ -6,6 +6,7 @@ postgres:
 
 flask:
   secret: xede134da2eqDQWD@12ewe
+  images_folder: ../pictures/
 
 
 logging:
