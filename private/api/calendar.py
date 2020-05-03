@@ -5,6 +5,7 @@ from datetime import datetime
 from datetime import timedelta
 from private.db.models.education import Assignment, DbMethods, Lesson
 from private.api.forms import EventForm
+from private.service import require_role
 
 calendar_api = Blueprint("calendar", __name__, url_prefix="/calendar")
 
@@ -40,6 +41,7 @@ def get_by_id():
 
 
 @calendar_api.route("/student/<event_id>", methods = ["GET"])
+@require_role
 def get_lesson_for_student(identity, event_id):
     events = []
     assignments = []
