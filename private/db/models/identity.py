@@ -1,7 +1,6 @@
 from sqlalchemy.sql.schema import Column, ForeignKey, MetaData
 from sqlalchemy.types import Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from private.db.models import DbValueNotFoundError
 
 meta = MetaData()
 Base = declarative_base(metadata=meta)
@@ -87,6 +86,7 @@ class DbMethods:
                     .filter(Class.roles == Role.id) \
                         .filter(Role.name == role).first()
             if not rs:
+                from private.db.models import DbValueNotFoundError
                 raise DbValueNotFoundError("Роли не существует!")
 
     @staticmethod

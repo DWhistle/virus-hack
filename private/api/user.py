@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from private.db.models.identity import DbMethods
 from . import RegistrationForm, ValidationError, ApiException
 import hashlib
-from private.service.auth import Registration, TokenAuth, UserValidation
+from private.service.auth import Registration, TokenAuth, UserValidation, require_role
 from private.api.forms import LoginForm
 import random
 
