@@ -45,7 +45,7 @@ class TestEdu(unittest.TestCase):
             ss.add(teacher_role)
             ss.add(director_role)
             ss.add(student_role)
-            ss.fetch()
+            ss.flush()
             teacher_class = Class(grade=100, roles=teacher_role.id, specialization='Учитель математики')
             student_class = Class(grade=6, roles=student_role.id, specialization='6-Б класс')
             director_class = Class(grade=242423123, roles=teacher_role.id, specialization='Директор школы')
