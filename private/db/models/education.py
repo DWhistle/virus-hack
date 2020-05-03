@@ -69,12 +69,13 @@ class DbMethods:
         return task.id
     
     @staticmethod
-    def assignment_add(teacher_id: int, assignee_class_id: int, assingment_id: int):
+    def assignment_add(teacher_id: int, assignee_class_id: int, assingment_id: int, event_id: int):
         from private.db.models import init_session
         with init_session() as ss:
             assignment = Assignment(teacher_id=teacher_id,
                                     assignee_user_id=assignee_class_id,
                                     task_id=assingment_id,
+                                    event_id=event_id,
                                     mark=0)
             ss.add(assignment)
         return assignment.id

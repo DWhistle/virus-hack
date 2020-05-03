@@ -46,7 +46,8 @@ def add_assignment(identity):
     af = AssignmentForm(request.form)
     assignment_id = DbMethods.assignment_add(identity.user_id,
                         af.assignee_user_id.data,
-                        af.task_id.data)
+                        af.task_id.data,
+                        af.event_id.data)
     return {
         "assignment_id": assignment_id
     }
