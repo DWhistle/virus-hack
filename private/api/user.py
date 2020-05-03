@@ -27,11 +27,11 @@ def get_by_id(id):
 @require_role
 def get_current_user_id(identity):
     user, profile, recommendation = DbMethods.user_info_by_id(identity.user_id)
-    user_class = DbMethods.class_by_id(user.class_id)
+    user_class, user_role = DbMethods.class_by_id(user.class_id)
     return {"id": user.id,
             "name": user.name,
             "class_id": user.class_id,
-            "class_name": user_class.name,
+            "class_name": user_role.name,
             "age": profile.age,
             "gender": profile.gender,
             "phone": profile.phone,

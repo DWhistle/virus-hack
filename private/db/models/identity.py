@@ -120,8 +120,10 @@ class DbMethods:
         from private.db.models import init_session
         info = []
         with init_session() as ss:
-            rs = ss.query(Class) \
-                    .filter(Class.id == class_id).first()
+            rs = ss.query(Class, Role) \
+                    .filter(Class.id == class_id) \
+                    .filter(Class.roles == Role.id) \
+                    .first()
         return rs
 
     @staticmethod
