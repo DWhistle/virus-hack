@@ -21,6 +21,21 @@ def get_by_id(id):
             "email": profile.email,
             "birthday": profile.birthday}
 
+@user_api.route("/my", methods = ["GET"])
+@require_role
+def get_current_user_id(identity):
+    user, profile = DbMethods.user_info_by_id(identity.user_id)
+    user_class = DbMethods.class_by_id(user.class_id)
+    return {"id": user.id,
+            "name": user.name,
+            "class_id": user.class_id,
+            "class_name": user_class.name,
+            "age": profile.age,
+            "gender": profile.gender,
+            "phone": profile.phone,
+            "email": profile.email,
+            "birthday": profile.birthday}
+
 @user_api.route("/", methods = ["GET"])
 def get_all():
     rs = DbMethods.user_info_all()
