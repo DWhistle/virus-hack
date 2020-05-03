@@ -11,7 +11,7 @@ user_api = Blueprint("user", __name__, url_prefix="/user")
 @user_api.route("/<id>", methods = ["GET"])
 def get_by_id(id):
     id = int(id or 0) 
-    user, profile = DbMethods.user_info_by_id(id)
+    user, profile, recommendation = DbMethods.user_info_by_id(id)
     return {"id": user.id,
             "name": user.name,
             "class_id": user.class_id,
@@ -19,12 +19,14 @@ def get_by_id(id):
             "gender": profile.gender,
             "phone": profile.phone,
             "email": profile.email,
-            "birthday": profile.birthday}
+            "birthday": profile.birthday,
+            "university": recommendation.university
+            "specialization": recommendation.specialization}
 
 @user_api.route("/my", methods = ["GET"])
 @require_role
 def get_current_user_id(identity):
-    user, profile = DbMethods.user_info_by_id(identity.user_id)
+    user, profile, recommendation = DbMethods.user_info_by_id(identity.user_id)
     user_class = DbMethods.class_by_id(user.class_id)
     return {"id": user.id,
             "name": user.name,
@@ -34,7 +36,9 @@ def get_current_user_id(identity):
             "gender": profile.gender,
             "phone": profile.phone,
             "email": profile.email,
-            "birthday": profile.birthday}
+            "birthday": profile.birthday,
+            "university": recommendation.university
+            "specialization": recommendation.specialization}
 
 @user_api.route("/", methods = ["GET"])
 def get_all():

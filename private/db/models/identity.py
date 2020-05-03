@@ -38,6 +38,14 @@ class User(Base):
     def get_info():
         pass
 
+def UniversityRecommendation(Base):
+    __tablename__ = 'university_recommendation'
+
+    id = Column(Integer, primary_key=True)
+    university = Column(String(127))
+    specialization = Column(String(32))
+    user_id = Column(Integer, ForeignKey('user.id'))
+
 class Profile(Base):
     __tablename__ = 'profile'
     id = Column(Integer, primary_key=True)
@@ -62,9 +70,10 @@ class DbMethods:
         from private.db.models import init_session
         info = []
         with init_session() as ss:
-            rs = ss.query(User, Profile)\
+            rs = ss.query(User, Profile, UniversityRecommendation)\
                 .filter(User.id == Profile.user_id)\
-                    .filter(User.id == user_id).first()
+                    .filter(User.id == user_id) \
+                    .filter(User.id == UniversityRecommendation.user_id).first()
         return rs
 
     @staticmethod

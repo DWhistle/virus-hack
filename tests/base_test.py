@@ -1,5 +1,5 @@
 import unittest
-from private.db.models import Profile, User, Event, Class, init_session, Lesson
+from private.db.models import Profile, User, Event, Class, init_session, Lesson, UniversityRecommendation
 import datetime
 from datetime import datetime
 from datetime import timedelta
@@ -21,6 +21,7 @@ class TestEdu(unittest.TestCase):
     def test_db_tables(self):
         def_class = Class(id=1, grade=1, roles=123, specialization='A')
         def_user = User(id=1, name = "Ольга Петровна", username='123', password='123', class_id = 1)
+        def_recommendation = UniversityRecommendation(id=1, university='НИУ ВШЭ', specialization='гуманитарий', user_id=1)
         def_profile = Profile(id=1,user_id=1,age=23,gender=1,phone='123213',email='sdsds@sds', birthday=datetime.now())
         def_lesson = Lesson(id=1,name="Математика")
         def_event = Event(id=1,teacher_id=1,lesson_id=1,
