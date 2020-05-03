@@ -1,4 +1,4 @@
-from .identity import User, Session, Class, Profile
+from .identity import User, Session, Class, Profile, UniversityRecommendation
 from .education import Event, Lesson
 
 from sqlalchemy import create_engine
