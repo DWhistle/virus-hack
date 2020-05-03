@@ -116,6 +116,13 @@ class DbMethods:
         return rs
 
     @staticmethod
+    def get_all_classes():
+        from private.db.models import init_session
+        with init_session() as ss:
+            rs = ss.query(Class, Role) \
+                    .filter(Class.roles == Role.id).all()
+        return rs
+    @staticmethod
     def register_user(name:str, email:str, password:str, age:int, phone:str, gender:int, class_id:int, username: str):
         from private.db.models import init_session
         with init_session() as ss:

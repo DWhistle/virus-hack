@@ -17,6 +17,9 @@ def get_by_id(id):
     mimetype='image/jpeg',
     as_attachment=True)
 
+@assessment_api.route("/image/upload", methods=["POST"])
+def upload_hw_image()
+
 @assessment_api.route("/pins/<id>", methods = ["GET"])
 def pins_by_id(id):
     id = int(id or 0)

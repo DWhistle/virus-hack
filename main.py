@@ -11,6 +11,7 @@ from private.api.classes import classes_api
 from flask_cors import CORS
 app = Flask(__name__)
 app.config['SECRET'] = Configurator.app_config['secret']
+app.config['IMAGES_FOLDER'] = Configurator.app_config['images_folder']
 CORS(app)
 app.register_blueprint(user_api)
 app.register_blueprint(teacher_api)
@@ -22,4 +23,4 @@ app.register_blueprint(classes_api)
 
 
 if __name__ == '__main__':
-    app.run("0.0.0.0", port=5000)
+    app.run("0.0.0.0", port=5000, ssl_context=('certs/cert.pem', 'certs/key.pem'))

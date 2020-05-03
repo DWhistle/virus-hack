@@ -1,6 +1,7 @@
 from wtforms import StringField, PasswordField, IntegerField, FieldList, Form, BooleanField
 from wtforms import validators
 from wtforms import FormField
+from wtforms import DateTimeField
 
 class RegistrationForm(Form):
     name = StringField('Name', [validators.Length(min=4, max=100), validators.DataRequired()])
@@ -41,3 +42,12 @@ class PinForm(Form):
 
 class PinsForm(Form):
     pins = FieldList(FormField(PinForm))
+
+
+class EventForm(Form):
+    teacher_id = IntegerField('TeacherId', validators=[validators.DataRequired()])
+    lesson_id = IntegerField('LessonId', validators=[validators.DataRequired()])
+    class_id = IntegerField('ClassId', validators=[validators.DataRequired()])
+    description = StringField('Description', validators=[validators.DataRequired()])
+    begin_time = DateTimeField('Begin', validators=[validators.DataRequired()])
+    end_time = DateTimeField('End', validators=[validators.DataRequired()])

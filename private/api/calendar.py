@@ -3,7 +3,8 @@ from flask import Blueprint, request
 from private.db.models import Event, Profile, init_session, User
 from datetime import datetime
 from datetime import timedelta
-from private.db.models.education import Lesson
+from private.db.models.education import Lesson, DbMethods
+from private.api.forms import EventForm
 
 calendar_api = Blueprint("calendar", __name__, url_prefix="/calendar")
 
