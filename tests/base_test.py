@@ -4,6 +4,7 @@ import datetime
 from datetime import datetime
 from datetime import timedelta
 from random import randint
+from private.db.models.identity import Role
 
 class TestEdu(unittest.TestCase):
 
@@ -35,4 +36,21 @@ class TestEdu(unittest.TestCase):
             ss.add(def_lesson)
         with init_session() as ss:
             ss.add(def_event)
+
+    def add_classes_and_roles(self):
+        teacher_role = Role(name = "Учитель", mask=2)
+        director_role = Role(name = "Директор", mask=3)
+        student_role = Role(name = "Ученик", mask=4)
+        with init_session() as ss:
+            ss.add(teacher_role)
+            ss.add(director_role)
+            ss.add(student_role)
+            ss.fetch()
+            teacher_class = Class(grade=100, roles=teacher_role.id, specialization='Учитель математики')
+            student_class = Class(grade=6, roles=student_role.id, specialization='6-Б класс')
+            director_class = Class(grade=242423123, roles=teacher_role.id, specialization='Директор школы')
+            ss.add(teacher_class)
+            ss.add(student_class)
+            ss.add(director_class)
+
 
