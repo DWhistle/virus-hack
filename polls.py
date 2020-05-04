@@ -24,6 +24,12 @@ def publish_poll(uid, data):
 
 @sio.event
 def connect(sid, environ):
+    json.dumps({"id":,
+                "teacher_id":,
+                "student":,
+                "question":,
+                "answers":,
+                "mark":,})
     print('connected ', sid)
 
 @sio.event
