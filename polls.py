@@ -20,16 +20,16 @@ def insert_poll(uid, data):
 
 @sio.on('publishpoll')
 def publish_poll(uid, data):
-    sio.emit('publish', data)
+    poll = json.dumps({"id": 1,
+                "teacher_id": 14,
+                "student": 15,
+                "question": "Что ищут в темной комнате?",
+                "answers": "Кошку;Собаку;!!Черную кошку!!;Лошадь",
+                "mark": 0,})
+    sio.emit('publish', poll)
 
 @sio.event
 def connect(sid, environ):
-    json.dumps({"id":,
-                "teacher_id":,
-                "student":,
-                "question":,
-                "answers":,
-                "mark":,})
     print('connected ', sid)
 
 @sio.event
