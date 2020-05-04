@@ -1,0 +1,110 @@
+@startuml relations
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b>PK x</b>
+!define foreign_key(x) <b>FK x</b>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <u>x</u>
+hide methods
+hide stereotypes
+
+Table(user, "user\n(Пользователь)") {
+primary_key(id) INT
+name varchar[127]
+not_null(unique(username)) varchar[32]
+not_null(password) varchar[64]
+not_null(class_id) INT
+}
+
+Table(class, "class\nКлассы (ученики, учителя, родители)") {
+primary_key(id) INT
+grade INT
+specialization INT
+roles INT
+}
+
+Table(role, "role\n(Роли пользователя)") {
+primary_key(id) INT
+not_null(unique(name)) varchar[32]
+not_null(mask) INT
+}
+
+Table(session, "session\n(Сессии)") {
+primary_key(id) INT
+foreign_key(not_null(user_id)) INT
+not_null(ip) varchar[16]
+}
+
+Table(profile, "profile\n(Общая инфа о пользователе)") {
+foreign_key(user_id) INT
+age INT
+gender bool
+phone varchar[11]
+email varchar[256]
+birthday date
+}
+
+Table(lesson, "lesson\nПредметы(русский, матан...)") {
+primary_key(id) INT
+not_null(name) varchar[127]
+}
+
+Table(calendar, "calendar\n(Расписание занятий)") {
+primary_key(id) INT
+teacher_id INT
+lesson_id INT
+class_id INT
+time DATETIME
+}
+
+Table(dashboard, "dashboard\n(Характеристики/скиллы)"){
+
+}
+
+
+Table(assessment, "assessment\n(Работы)"){
+primary_key(id) INT
+type INT
+foreign_key(assigner) INT
+foreign_key(assignee) INT
+is_checked BOOL
+start_date DATETIME
+end_date DATETIME
+}
+
+Table(assessment_type, "assessment_type\n(Типы работ)"){
+primary_key(id) INT
+name varchar[30]
+}
+
+Table(tasks, "tasks\n(Задания)") {
+primary_key(id) INT
+foreign_key(lesson_id) INT
+attachment varchar[MAX]
+attachment_type INT
+mark INT
+}
+
+profile --> user: user.id
+class -- role: Роли из маски
+user --> class: class_id = class.id
+
+session --> user: user_id = user.id
+calendar --> lesson: lesson_id = lesson.id
+calendar --> user: teacher_id = user.id
+calendar --> class: class_id = class.id
+assessment --> assessment_type: type = assessment_type.id
+assessment --> user: assigner, assignee
+tasks --> lesson: lesson_id = lesson.id
+
+' one to may relationship
+' user --> session : "A user may have\n many sessions"
+' many to many relationship
+' Add mark if you like
+
+
+' user "1" --> "*" user_group : "A user may be \nin many groups"
+' group "1" --> "0..N" user_group : "A group may \ncontain many users"
+
+
+
+@enduml

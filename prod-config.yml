@@ -1,10 +1,12 @@
 postgres:
-  host: ""
-  user: ""
-  password: ""
-  database: ""
+  driver: postgresql+psycopg2
+  user: dev_user
+  password: dev_user
+  database: edu
 
 flask:
+  secret: xede134da2eqDQWD@12ewe
+  images_folder: ../pictures/
 
 
 logging:
