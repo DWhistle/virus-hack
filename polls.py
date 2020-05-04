@@ -4,7 +4,7 @@ from private.config import Configurator
 Configurator.configure_resources()
 from private.db.models.education import DbMethods
 
-sio = socketio.Server()
+sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
 
 
@@ -12,7 +12,7 @@ app = socketio.WSGIApp(sio)
 @sio.on('sendpoll')
 def insert_poll(data):
     print('sendpoll ', data)
-    
+
 
 
 @sio.on('getpoll')
