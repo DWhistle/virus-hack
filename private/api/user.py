@@ -45,7 +45,8 @@ def get_all():
     rs = DbMethods.user_info_all()
     users = []
     for user, profile in rs:
-        users.append({"id": user.id,
+        users.append({
+            "id": user.id,
             "name": user.name,
             "age": profile.age,
             "gender": profile.gender,

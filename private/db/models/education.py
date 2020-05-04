@@ -17,6 +17,15 @@ class Event(Base):
     def get_by_id(self):
         pass
 
+class Poll(Base):
+    __tablename__ = 'poll'
+    id = Column(Integer, primary_key=True)
+    teacher_id = Column(Integer, ForeignKey("user.id"))
+    class_id = Column(Integer, ForeignKey("user.class_id"))
+    question = Column(String(500))
+    answers = Column(String(120))
+    poll_time = Column(DateTime)
+
 class Lesson(Base):
     __tablename__ = 'lesson'
     id = Column(Integer, primary_key=True)

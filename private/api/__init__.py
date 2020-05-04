@@ -1,4 +1,5 @@
 from .forms import *
+from private.api.polls import app
 
 
 class ApiException(Exception):
