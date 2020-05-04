@@ -3,6 +3,7 @@ from private.db.models.identity import DbMethods
 from . import RegistrationForm, ValidationError, ApiException
 import hashlib
 from private.service.auth import Registration, TokenAuth, UserValidation, require_role
+from private.service.model import CatBoostRegressorModel
 from private.api.forms import LoginForm
 import random
 
