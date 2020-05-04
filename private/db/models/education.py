@@ -21,10 +21,11 @@ class Poll(Base):
     __tablename__ = 'poll'
     id = Column(Integer, primary_key=True)
     teacher_id = Column(Integer, ForeignKey("user.id"))
-    class_id = Column(Integer, ForeignKey("user.class_id"))
+    student = Column(Integer, ForeignKey("user.id"))
     question = Column(String(500))
     answers = Column(String(120))
     poll_time = Column(DateTime)
+    mark = Column(Integer)
 
 class Lesson(Base):
     __tablename__ = 'lesson'
@@ -152,3 +153,16 @@ class DbMethods:
                 .filter(*filters).all()
         print(rs, assignments)
         return rs, assignments
+    
+    @staticmethod
+    def insert_poll_result(teacher_id, student, question, answers, mark, poll_time):
+        from private.db.models import init_session
+        with init_session() as ss: 
+            poll = Poll(teacher_id=teacher_id,
+                        student = student,
+                        question = question,
+                        answers = answers,
+                        mark = mark,
+                        poll_time = poll_time)
+            ss.add(poll)
+        return True
