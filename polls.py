@@ -4,6 +4,7 @@ from private.config import Configurator
 Configurator.configure_resources()
 from private.db.models.education import DbMethods
 import json
+from datetime import datetime
 import re
 
 sio = socketio.Server(cors_allowed_origins='*')
@@ -15,6 +16,14 @@ app = socketio.WSGIApp(sio)
 def insert_poll(uid, data):
     print(data)
     poll = json.loads(data)
+    DbMethods.insert_poll_result(
+        poll['teacher_id'],
+        poll['student'],
+        poll['question'],
+        poll['answers'],
+        poll['mark'],
+        datetime.now()
+    )
     print('insertpoll ', poll)
 
 
@@ -28,7 +37,7 @@ def publish_poll(uid, data):
                 "student": 15,
                 "question": "Что ищут в темной комнате?",
                 "answers": ans.replace('!!', ''),
-                "right": re.findall(r'!!.*!!', ans)[0],
+                "right": re.findall(r'!!.*!!', ans)[0].replace('!!', ''),
                 "mark": 0,})
     sio.emit('publish', poll)
 
