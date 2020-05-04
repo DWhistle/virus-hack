@@ -4,6 +4,7 @@ from private.config import Configurator
 Configurator.configure_resources()
 from private.db.models.education import DbMethods
 import json
+import re
 
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
@@ -20,11 +21,14 @@ def insert_poll(uid, data):
 
 @sio.on('publishpoll')
 def publish_poll(uid, data):
+    print(data)
+    ans = "Кошку;Собаку;!!Черную кошку!!;Лошадь"
     poll = json.dumps({"id": 1,
                 "teacher_id": 14,
                 "student": 15,
                 "question": "Что ищут в темной комнате?",
-                "answers": "Кошку;Собаку;!!Черную кошку!!;Лошадь",
+                "answers": ans.replace('!!', ''),
+                "right": re.findall(r'!!.*!!', ans)[0],
                 "mark": 0,})
     sio.emit('publish', poll)
 
