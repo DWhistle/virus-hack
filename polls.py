@@ -10,7 +10,7 @@ app = socketio.WSGIApp(sio)
 
 
 @sio.on('sendpoll')
-def insert_poll(data):
+def insert_poll(uid, data):
     print('sendpoll ', data)
 
 
