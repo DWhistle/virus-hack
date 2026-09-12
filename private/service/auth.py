@@ -31,7 +31,7 @@ class IdentityObject:
 
 class UserValidation:
     def check_role(self, class_id, role):
-        if role is not '':
+        if role != '':
             DbMethods.check_rights(class_id, role)
 
     def check_identity(self, username:str, password:str):
@@ -56,14 +56,14 @@ class TokenAuth:
         payload = {
             'exp': datetime.utcnow() + timedelta(days=0, hours=2),
             'iat': datetime.utcnow(),
-            'sub': user_id,
+            'sub': str(user_id),
             'class': user_class_id
         }
         return jwt.encode(
             payload,
             app.config.get('SECRET'),
-            algorithm='HS256').decode("utf-8")
+            algorithm='HS256')
 
     def verify_token(self, token):
-            payload = jwt.decode(token, app.config.get('SECRET'))
-            return payload['sub'], payload['class']
+            payload = jwt.decode(token, app.config.get('SECRET'), algorithms=['HS256'])
+            return int(payload['sub']), payload['class']

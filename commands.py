@@ -7,7 +7,7 @@ from private.db.models.education import *
 
 
 meta.bind = db_connection
-client = FlaskGroup(app)
+client = FlaskGroup(create_app=lambda: app)
 @client.command("drop_db")
 def drop_all():
     meta.drop_all()

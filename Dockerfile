@@ -1,11 +1,7 @@
-FROM ubuntu:18.04
-COPY . /app
+FROM python:3.12-slim
 WORKDIR /app
-RUN apt update && \
-    apt install -y --fix-missing build-essential && \
-    apt install -y --fix-missing python3 && \
-    apt install -y --fix-missing python3-pip
-RUN python3 -m pip install --upgrade --force pip && \
-     pip install --upgrade cython && \
-     python3 -m pip install -r requirements.txt
-CMD python3 ./main.py
+COPY requirements.txt .
+RUN python -m pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 5000
+CMD ["python", "main.py"]
