@@ -11,6 +11,7 @@ from private.api.classes import classes_api
 from flask_cors import CORS
 app = Flask(__name__)
 app.config['SECRET'] = Configurator.app_config['secret']
+app.config['SECRET_KEY'] = Configurator.app_config['secret']
 app.config['IMAGES_FOLDER'] = Configurator.app_config['images_folder']
 CORS(app)
 app.register_blueprint(user_api)

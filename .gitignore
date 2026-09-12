@@ -136,3 +136,13 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Local configuration, credentials and editor metadata
+.env.*
+!.env.example
+certs/
+*.pem
+.idea/
+.vscode/
+.DS_Store
+pictures/

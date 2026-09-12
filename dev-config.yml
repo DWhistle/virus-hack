@@ -1,14 +1,4 @@
-postgres:
-  driver: postgresql+psycopg2
-  user: dev_user
-  password: dev_user
-  database: edu
-
-flask:
-  secret: xede134da2eqDQWD@12ewe
-  images_folder: ../pictures/
-
-
+# Runtime values are supplied by environment variables; see .env.example.
 logging:
   version: 1
   disable_existing_loggers: True

@@ -1,0 +1,12 @@
+.git
+.env
+.env.*
+certs
+*.pem
+.venv
+venv
+__pycache__
+*.pyc
+.idea
+.vscode
+pictures
