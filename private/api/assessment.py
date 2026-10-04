@@ -1,8 +1,9 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, current_app
 from flask.helpers import send_file
 from private.service import require_role
 from private.api.forms import TaskForm, AssignmentForm, PinsForm
 from private.db.models.education import DbMethods
+from pathlib import Path
 import io
 import json
 
@@ -11,7 +12,7 @@ assessment_api = Blueprint("assessment", __name__, url_prefix="/assessment")
 @assessment_api.route("/<id>", methods = ["GET"])
 def get_by_id(id):
     id = int(id or 0)
-    f_name = f"../pictures/{id}.jpg"
+    f_name = Path(current_app.config["IMAGES_FOLDER"]) / f"{id}.jpg"
     return send_file(
     f_name,
     mimetype='image/jpeg',

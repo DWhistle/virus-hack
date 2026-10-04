@@ -1,5 +1,3 @@
-export FLASK_APP="main.py"
-export SERVER_MODE=DEV
-
-
-#gunicorn --certfile cert.pem --keyfile key.pem -b 0.0.0.0:5001 main:app
+# Source after loading .env; values are not overwritten.
+export FLASK_APP=main.py
+export SERVER_MODE="${SERVER_MODE:-DEV}"
